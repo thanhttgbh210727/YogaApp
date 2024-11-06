@@ -19,7 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.Calendar;
 
-public class AddClass extends AppCompatActivity {
+public class Create extends AppCompatActivity {
     Spinner dayOfWeek;
     TextView inputTime, timeBtn;
     EditText inputCapacity, inputDuration, inputPrice, inputType, inputDescription, inputTeacher;
@@ -38,7 +38,7 @@ public class AddClass extends AppCompatActivity {
             return insets;
         });
 
-        db = new Database(AddClass.this);
+        db = new Database(Create.this);
 
         dayOfWeek = findViewById(R.id.inputDay);
         inputTime = findViewById(R.id.inputTime);
@@ -70,7 +70,8 @@ public class AddClass extends AppCompatActivity {
                 String _description = inputDescription.getText().toString();
                 String _teacher = inputTeacher.getText().toString();
 
-                db.addClass(AddClass.this, _dayOfWeek, _time, _capacity, _duration, _price, _type, _description, _teacher);
+                db.addClass(Create.this, _dayOfWeek, _time, _capacity, _duration, _price, _type, _description, _teacher);
+                finish();
             }
         });
 

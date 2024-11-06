@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
-            android:hint="Search class"
+            android:hint="Search teacher name"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             />

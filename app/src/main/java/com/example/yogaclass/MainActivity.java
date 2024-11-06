@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -69,12 +70,77 @@ public class MainActivity extends AppCompatActivity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddClass.class);
+                Intent intent = new Intent(MainActivity.this, Create.class);
                 startActivity(intent);
 
             }
         });
 
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText input = findViewById(R.id.searchInput);
+                String _input = input.getText().toString();
+                classId.clear();
+                dayOfWeek.clear();
+                time.clear();
+                capacity.clear();
+                duration.clear();
+                price.clear();
+                type.clear();
+                description.clear();
+                teacher.clear();
+                showSearchResult(_input);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1) {
+            recreate();
+        }
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        classId.clear();
+        dayOfWeek.clear();
+        time.clear();
+        capacity.clear();
+        duration.clear();
+        price.clear();
+        type.clear();
+        description.clear();
+        teacher.clear();
+
+        showClass();
+        adapter.notifyDataSetChanged();
+    }
+
+    private void showSearchResult(String input) {
+        Cursor cursor = db.searchClassByName(input);
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "There is 0 class", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            while (cursor.moveToNext()) {
+                classId.add(cursor.getString(0));
+                dayOfWeek.add(cursor.getString(1));
+                time.add(cursor.getString(2));
+                capacity.add(cursor.getString(3));
+                duration.add(cursor.getString(4));
+                price.add(cursor.getString(5));
+                type.add(cursor.getString(6));
+                description.add(cursor.getString(7));
+                teacher.add(cursor.getString(8));
+            }
+        }
+        Toast.makeText(this, "xcxcx", Toast.LENGTH_SHORT).show();
     }
 
     private void showClass() {
