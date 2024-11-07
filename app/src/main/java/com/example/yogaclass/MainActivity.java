@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
     private void showSearchResult(String input) {
         Cursor cursor = db.searchClassByName(input);
         if (cursor.getCount() == 0) {
-            Toast.makeText(this, "There is 0 class", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Try Again", Toast.LENGTH_SHORT).show();
         }
         else {
             while (cursor.moveToNext()) {
@@ -140,13 +140,13 @@ public class MainActivity extends AppCompatActivity {
                 teacher.add(cursor.getString(8));
             }
         }
-        Toast.makeText(this, "xcxcx", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Fill teacher name for searching", Toast.LENGTH_SHORT).show();
     }
 
     private void showClass() {
         Cursor cursor = db.getClasses();
         if (cursor.getCount() == 0) {
-            Toast.makeText(this, "There is 0 class", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No records available", Toast.LENGTH_SHORT).show();
         }
         else {
             while (cursor.moveToNext()) {

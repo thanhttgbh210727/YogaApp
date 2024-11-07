@@ -5,223 +5,196 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".Update">
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Yoga Class"
-        android:textAlignment="center"
-        android:layout_margin="30dp"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:textColor="@color/blue"
-        />
-    <LinearLayout
-        android:id="@+id/day"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/textView"
-        android:layout_margin="5dp"
-        >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Day of the week"
-            android:layout_margin="10dp"
-            android:textSize="16dp"/>
+    <!-- ScrollView for scrolling content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <Spinner
-            android:id="@+id/inputDay"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/time"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/day"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Time of course"
-            android:textSize="16dp"
-            android:layout_margin="10dp"/>
-        <TextView
-            android:id="@+id/inputTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Pick a time"
-            />
-        <TextView
-            android:id="@+id/timeBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/pick_time"
-            android:layout_marginLeft="10dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/capacity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/time"
-        android:layout_margin="5dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Capacity"
-            android:textSize="16dp"
-            android:layout_margin="10dp"/>
-        <EditText
-            android:id="@+id/inputCapacity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="input capacity"
-            android:inputType="number"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/duration"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/capacity"
-        android:layout_margin="5dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Duration"
-            android:textSize="16dp"
-            android:layout_margin="10dp"/>
-        <EditText
-            android:id="@+id/inputDuration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="input duration"
-            android:inputType="number"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/duration"
-        android:layout_margin="5dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Price per class"
-            android:textSize="16dp"
-            android:layout_margin="10dp"/>
-        <EditText
-            android:id="@+id/inputPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="input price per class"
-            android:inputType="number"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/price"
-        android:layout_margin="5dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Type of class"
-            android:textSize="16dp"
-            android:layout_margin="10dp"/>
-        <EditText
-            android:id="@+id/inputType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Flow Yoga, Aerial Yoga..."/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/type"
-        android:layout_margin="5dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Desciption"
-            android:textSize="16dp"
-            android:layout_margin="10dp"/>
-        <EditText
-            android:id="@+id/inputDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Optional"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/teacher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/description"
-        android:layout_margin="5dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Teacher of class"
-            android:textSize="16dp"
-            android:layout_margin="10dp"/>
-        <EditText
-            android:id="@+id/inputTeacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Teacher name"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="60dp"
-        >
+            android:orientation="vertical"
+            android:padding="14dp">
 
+            <!-- Title TextView -->
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Information"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/blue"
+                android:layout_marginBottom="20dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Update"
-        android:id="@+id/updateBtn"
-        android:layout_marginRight="30dp"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete"
-        android:id="@+id/deleteBtn"
-        android:layout_marginLeft="30dp"
-        />
-    </LinearLayout>
+            <!-- Day Selection -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Day of the week"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="10dp" />
+
+                <Spinner
+                    android:id="@+id/inputDay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:backgroundTint="@color/blue" />
+            </LinearLayout>
+
+            <!-- Time Selection -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time of course"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:id="@+id/inputTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:background="@drawable/rounded_background"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:id="@+id/timeBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/pick_time"
+                    android:padding="8dp" />
+            </LinearLayout>
+
+            <!-- Input Fields (Capacity, Duration, Price, Type, Description, Teacher) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Capacity">
+
+                <EditText
+                    android:id="@+id/inputCapacity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Duration">
+
+                <EditText
+                    android:id="@+id/inputDuration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Price per class">
+
+                <EditText
+                    android:id="@+id/inputPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Type of class (Flow Yoga, Aerial Yoga...)">
+
+                <EditText
+                    android:id="@+id/inputType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Description (Optional)">
+
+                <EditText
+                    android:id="@+id/inputDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Teacher of class">
+
+                <EditText
+                    android:id="@+id/inputTeacher"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Update and Delete Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="20dp">
+
+                <Button
+                    android:id="@+id/updateBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Update"
+                    android:textStyle="bold"
+                    android:paddingHorizontal="50dp"
+                    android:layout_marginEnd="20dp"
+                    android:backgroundTint="@color/blue"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/deleteBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete"
+                    android:paddingHorizontal="50dp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="20dp"
+                    android:backgroundTint="@color/red"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

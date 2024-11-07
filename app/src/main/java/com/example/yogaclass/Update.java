@@ -80,6 +80,9 @@ public class Update extends AppCompatActivity {
                 finish();
             }
         });
+
+        timeBtn.setOnClickListener(val -> showTimePicker(inputTime));
+        showDropdownList(dayOfWeek);
     }
     private void showDropdownList(Spinner spinner) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.dayofweek, android.R.layout.simple_spinner_item);
