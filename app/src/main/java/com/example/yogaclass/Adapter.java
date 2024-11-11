@@ -15,13 +15,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
-    private Context context;
-    private ArrayList class_id, dayOfWeek, time, capacity, duration, price, type, description, teacher;
-    private Activity activity;
+    private final Context context;
+    private final Activity activity;
+    private final ArrayList<String> classId, dayOfWeek, time, capacity, duration, price, type, description, teacher;
 
-    public Adapter(Activity activity, Context context, ArrayList class_id, ArrayList dayOfWeek, ArrayList time, ArrayList capacity, ArrayList duration, ArrayList price, ArrayList type, ArrayList description, ArrayList teacher) {
+    private static final int REQUEST_CODE_UPDATE = 1;
+
+    public Adapter(Activity activity, Context context,
+                   ArrayList<String> classId, ArrayList<String> dayOfWeek, ArrayList<String> time,
+                   ArrayList<String> capacity, ArrayList<String> duration, ArrayList<String> price,
+                   ArrayList<String> type, ArrayList<String> description, ArrayList<String> teacher) {
+        this.activity = activity;
         this.context = context;
-        this.class_id = class_id;
+        this.classId = classId;
         this.dayOfWeek = dayOfWeek;
         this.time = time;
         this.capacity = capacity;
@@ -30,7 +36,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         this.type = type;
         this.description = description;
         this.teacher = teacher;
-        this.activity = activity;
     }
 
     @NonNull
@@ -42,45 +47,47 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder._teacher.setText(String.valueOf(teacher.get(position)));
-        holder._type.setText(String.valueOf(type.get(position)));
-        holder._time.setText(String.valueOf(time.get(position)));
-        holder.classYoga.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int index = holder.getAdapterPosition();
-                if (index != RecyclerView.NO_POSITION) {
-                    Intent intent = new Intent(context, Update.class);
-                    intent.putExtra("class", String.valueOf(class_id.get(index)));
-                    intent.putExtra("day", String.valueOf(dayOfWeek.get(index)));
-                    intent.putExtra("time", String.valueOf(time.get(index)));
-                    intent.putExtra("capacity", String.valueOf(capacity.get(index)));
-                    intent.putExtra("duration", String.valueOf(duration.get(index)));
-                    intent.putExtra("price", String.valueOf(price.get(index)));
-                    intent.putExtra("type", String.valueOf(type.get(index)));
-                    intent.putExtra("description", String.valueOf(description.get(index)));
-                    intent.putExtra("teacher", String.valueOf(teacher.get(index)));
-                    activity.startActivityForResult(intent, 1);
-                }
-            }
-        });
+        holder.bindData(position);
     }
 
     @Override
     public int getItemCount() {
-        return class_id.size();
+        return classId.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView _teacher, _type, _time;
-        CardView classYoga;
+        private final TextView teacherTextView, typeTextView, timeTextView;
+        private final CardView classCard;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            _teacher = itemView.findViewById(R.id.teacher);
-            _type = itemView.findViewById(R.id.type);
-            _time = itemView.findViewById(R.id.time);
-            classYoga = itemView.findViewById(R.id.classYoga);
+            teacherTextView = itemView.findViewById(R.id.teacher);
+            typeTextView = itemView.findViewById(R.id.type);
+            timeTextView = itemView.findViewById(R.id.time);
+            classCard = itemView.findViewById(R.id.classYoga);
+        }
+
+        void bindData(int position) {
+            teacherTextView.setText(teacher.get(position));
+            typeTextView.setText(type.get(position));
+            timeTextView.setText(time.get(position));
+
+            classCard.setOnClickListener(view -> {
+                int index = getAdapterPosition();
+                if (index != RecyclerView.NO_POSITION) {
+                    Intent intent = new Intent(context, Update.class);
+                    intent.putExtra("class", classId.get(index));
+                    intent.putExtra("day", dayOfWeek.get(index));
+                    intent.putExtra("time", time.get(index));
+                    intent.putExtra("capacity", capacity.get(index));
+                    intent.putExtra("duration", duration.get(index));
+                    intent.putExtra("price", price.get(index));
+                    intent.putExtra("type", type.get(index));
+                    intent.putExtra("description", description.get(index));
+                    intent.putExtra("teacher", teacher.get(index));
+                    activity.startActivityForResult(intent, REQUEST_CODE_UPDATE);
+                }
+            });
         }
     }
 }

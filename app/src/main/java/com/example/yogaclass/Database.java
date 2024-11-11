@@ -10,122 +10,118 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 public class Database extends SQLiteOpenHelper {
-    public Database(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
-    }
-    //create db
-    private static final String database_name = "Yogadb";
-    private static final int database_version = 1;
+    // Database info
+    private static final String DATABASE_NAME = "Yogadb";
+    private static final int DATABASE_VERSION = 1;
 
-    //create table
-    public static final String table_classes = "Classes";
-    public static final String column_class_id = "class_id";
-    public static final String column_dayOfWeek = "dayOfWeek";
-    public static final String column_time = "time";
-    public static final String column_capacity = "capacity";
-    public static final String column_duration = "duration";
-    public static final String column_price = "price";
-    public static final String column_type = "type";
-    public static final String column_description = "desciption";
-    public static final String column_teacher = "teacher";
+    // Table and column names
+    public static final String TABLE_CLASSES = "Classes";
+    public static final String COLUMN_CLASS_ID = "class_id";
+    public static final String COLUMN_DAY_OF_WEEK = "dayOfWeek";
+    public static final String COLUMN_TIME = "time";
+    public static final String COLUMN_CAPACITY = "capacity";
+    public static final String COLUMN_DURATION = "duration";
+    public static final String COLUMN_PRICE = "price";
+    public static final String COLUMN_TYPE = "type";
+    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_TEACHER = "teacher";
 
-    //SQL
-    private static final String create_table_classes = "create table " + table_classes + " ("
-    + column_class_id + " integer primary key autoincrement, "
-    + column_dayOfWeek + " text not null, "
-    + column_time + " text not null, "
-    + column_capacity + " integer, "
-    + column_duration + " integer, "
-    + column_price + " double, "
-    + column_type  + " text, "
-    + column_description + " text, "
-    + column_teacher + " text not null);";
+    // SQL statement to create the classes table
+    private static final String CREATE_TABLE_CLASSES = "CREATE TABLE " + TABLE_CLASSES + " ("
+            + COLUMN_CLASS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_DAY_OF_WEEK + " TEXT NOT NULL, "
+            + COLUMN_TIME + " TEXT NOT NULL, "
+            + COLUMN_CAPACITY + " INTEGER, "
+            + COLUMN_DURATION + " INTEGER, "
+            + COLUMN_PRICE + " DOUBLE, "
+            + COLUMN_TYPE + " TEXT, "
+            + COLUMN_DESCRIPTION + " TEXT, "
+            + COLUMN_TEACHER + " TEXT NOT NULL);";
 
     public Database(Context context) {
-        super(context, database_name, null, database_version);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(create_table_classes);
+        db.execSQL(CREATE_TABLE_CLASSES);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("drop table if exists " + table_classes);
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLASSES);
         onCreate(db);
+    }
+
+    // Helper method to show a toast message
+    private void showToast(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
     public void addClass(Context context, String dayOfWeek, String time, int capacity, int duration, double price, String type, String description, String teacher) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(column_dayOfWeek, dayOfWeek);
-        values.put(column_time, time);
-        values.put(column_capacity, capacity);
-        values.put(column_duration, duration);
-        values.put(column_price, price);
-        values.put(column_type, type);
-        values.put(column_description, description);
-        values.put(column_teacher, teacher);
+        values.put(COLUMN_DAY_OF_WEEK, dayOfWeek);
+        values.put(COLUMN_TIME, time);
+        values.put(COLUMN_CAPACITY, capacity);
+        values.put(COLUMN_DURATION, duration);
+        values.put(COLUMN_PRICE, price);
+        values.put(COLUMN_TYPE, type);
+        values.put(COLUMN_DESCRIPTION, description);
+        values.put(COLUMN_TEACHER, teacher);
 
-        long result = db.insert(table_classes, null, values);
-        if (result == -1) {
+        try {
+            long result = db.insert(TABLE_CLASSES, null, values);
+            showToast(context, result == -1 ? "Add failed!" : "Added successfully!");
+        } catch (Exception e) {
+            showToast(context, "Error adding class: " + e.getMessage());
+        } finally {
             db.close();
-            Toast.makeText(context , "Added fail!", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            db.close();
-            Toast.makeText(context , "Added ok!", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void updateClass(Context context, String class_id, String dayOfWeek, String time, int capacity, int duration, double price, String type, String description, String teacher) {
+    public void updateClass(Context context, String classId, String dayOfWeek, String time, int capacity, int duration, double price, String type, String description, String teacher) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(column_dayOfWeek, dayOfWeek);
-        values.put(column_time, time);
-        values.put(column_capacity, capacity);
-        values.put(column_duration, duration);
-        values.put(column_price, price);
-        values.put(column_type, type);
-        values.put(column_description, description);
-        values.put(column_teacher, teacher);
+        values.put(COLUMN_DAY_OF_WEEK, dayOfWeek);
+        values.put(COLUMN_TIME, time);
+        values.put(COLUMN_CAPACITY, capacity);
+        values.put(COLUMN_DURATION, duration);
+        values.put(COLUMN_PRICE, price);
+        values.put(COLUMN_TYPE, type);
+        values.put(COLUMN_DESCRIPTION, description);
+        values.put(COLUMN_TEACHER, teacher);
 
-        int classId = db.update(table_classes, values, " class_id = ?", new String[]{String.valueOf(class_id)});
-        if (classId == -1) {
+        try {
+            int result = db.update(TABLE_CLASSES, values, COLUMN_CLASS_ID + " = ?", new String[]{classId});
+            showToast(context, result == -1 ? "Update failed!" : "Updated successfully!");
+        } catch (Exception e) {
+            showToast(context, "Error updating class: " + e.getMessage());
+        } finally {
             db.close();
-            Toast.makeText(context , "Updated Fail!", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            db.close();
-            Toast.makeText(context , "Updated Successfully!", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void deleteClass(Context context, String class_id) {
+    public void deleteClass(Context context, String classId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int classId = db.delete(table_classes, " class_id = ?", new String[]{String.valueOf(class_id)});
-        if (classId == -1) {
+        try {
+            int result = db.delete(TABLE_CLASSES, COLUMN_CLASS_ID + " = ?", new String[]{classId});
+            showToast(context, result == -1 ? "Delete failed!" : "Deleted successfully!");
+        } catch (Exception e) {
+            showToast(context, "Error deleting class: " + e.getMessage());
+        } finally {
             db.close();
-            Toast.makeText(context , "Can not delete", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            db.close();
-            Toast.makeText(context , "Delete Successfully!", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     public Cursor getClasses() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(table_classes, null, null, null, null,null,null);
+        return this.getReadableDatabase().query(TABLE_CLASSES, null, null, null, null, null, null);
     }
 
     public Cursor searchClassByName(String teacher) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String data = column_teacher + " like ?";
-        String[] dataArgs = { "%" + teacher + "%"};
-
-        return db.query(table_classes, null, data, dataArgs,null, null, null);
+        String selection = COLUMN_TEACHER + " LIKE ?";
+        String[] selectionArgs = {"%" + teacher + "%"};
+        return db.query(TABLE_CLASSES, null, selection, selectionArgs, null, null, null);
     }
 }
