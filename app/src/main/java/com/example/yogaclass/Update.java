@@ -42,6 +42,7 @@ public class Update extends AppCompatActivity {
 
         db = new Database(Update.this);
 
+        // Initialize UI components
         dayOfWeek = findViewById(R.id.inputDay);
         inputTime = findViewById(R.id.inputTime);
         timeBtn = findViewById(R.id.timeBtn);
@@ -56,23 +57,29 @@ public class Update extends AppCompatActivity {
 
         setClassDetail();
 
+        // Update button click listener
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String _dayOfWeek = dayOfWeek.getSelectedItem().toString();
-                String _time = inputTime.getText().toString();
-                int _capacity = Integer.parseInt(inputCapacity.getText().toString());
-                int _duration = Integer.parseInt(inputDuration.getText().toString());
-                double _price = Double.parseDouble(inputPrice.getText().toString());
-                String _type = inputType.getText().toString();
-                String _description = inputDescription.getText().toString();
-                String _teacher = inputTeacher.getText().toString();
+                if (isInputValid()) {
+                    // Retrieve input values
+                    String _dayOfWeek = dayOfWeek.getSelectedItem().toString();
+                    String _time = inputTime.getText().toString();
+                    int _capacity = Integer.parseInt(inputCapacity.getText().toString());
+                    int _duration = Integer.parseInt(inputDuration.getText().toString());
+                    double _price = Double.parseDouble(inputPrice.getText().toString());
+                    String _type = inputType.getText().toString();
+                    String _description = inputDescription.getText().toString();
+                    String _teacher = inputTeacher.getText().toString();
 
-                db.updateClass(Update.this, classId, _dayOfWeek, _time, _capacity, _duration, _price, _type, _description, _teacher);
-                finish();
+                    // Update class in the database
+                    db.updateClass(Update.this, classId, _dayOfWeek, _time, _capacity, _duration, _price, _type, _description, _teacher);
+                    finish();
+                }
             }
         });
 
+        // Delete button click listener
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,14 +88,15 @@ public class Update extends AppCompatActivity {
             }
         });
 
+        // Time picker button click listener
         timeBtn.setOnClickListener(val -> showTimePicker(inputTime));
         showDropdownList(dayOfWeek);
     }
+
+    // Display a dropdown list for days of the week
     private void showDropdownList(Spinner spinner) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.dayofweek, android.R.layout.simple_spinner_item);
-
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -99,11 +107,11 @@ public class Update extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
     }
 
+    // Show a time picker dialog to select the time
     private void showTimePicker(TextView inputTime) {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -115,9 +123,10 @@ public class Update extends AppCompatActivity {
         }, hour, minute, true);
         timePickerDialog.show();
     }
-    
+
+    // Load class details into the UI
     private void setClassDetail() {
-        if (getIntent().hasExtra("class") && 
+        if (getIntent().hasExtra("class") &&
                 getIntent().hasExtra("day") &&
                 getIntent().hasExtra("time") &&
                 getIntent().hasExtra("capacity") &&
@@ -125,11 +134,9 @@ public class Update extends AppCompatActivity {
                 getIntent().hasExtra("price") &&
                 getIntent().hasExtra("type") &&
                 getIntent().hasExtra("description") &&
-                getIntent().hasExtra("teacher")
-        )
-        {
+                getIntent().hasExtra("teacher")) {
             classId = getIntent().getStringExtra("class");
-            setDayOfWeek(dayOfWeek, getIntent().getStringExtra("day") );
+            setDayOfWeek(dayOfWeek, getIntent().getStringExtra("day"));
             inputTime.setText(getIntent().getStringExtra("time"));
             inputCapacity.setText(getIntent().getStringExtra("capacity"));
             inputDuration.setText(getIntent().getStringExtra("duration"));
@@ -137,20 +144,53 @@ public class Update extends AppCompatActivity {
             inputType.setText(getIntent().getStringExtra("type"));
             inputDescription.setText(getIntent().getStringExtra("description"));
             inputTeacher.setText(getIntent().getStringExtra("teacher"));
-        }
-        else
-        {
-            Toast.makeText(this, "Load data fail", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Failed to load class data", Toast.LENGTH_SHORT).show();
         }
     }
-    
+
+    // Set day of the week in the spinner
     private void setDayOfWeek(Spinner spinner, String value) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.dayofweek, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        
+
         int index = adapter.getPosition(value);
         if (index >= 0)
             spinner.setSelection(index);
+    }
+
+    // Validate user input
+    private boolean isInputValid() {
+        if (inputTime.getText().toString().isEmpty()) {
+            showError("Please pick a time for the class");
+            return false;
+        }
+        if (inputCapacity.getText().toString().isEmpty() || Integer.parseInt(inputCapacity.getText().toString()) <= 0) {
+            showError("Please enter a valid capacity");
+            return false;
+        }
+        if (inputDuration.getText().toString().isEmpty() || Integer.parseInt(inputDuration.getText().toString()) <= 0) {
+            showError("Please enter a valid duration");
+            return false;
+        }
+        if (inputPrice.getText().toString().isEmpty() || Double.parseDouble(inputPrice.getText().toString()) < 0) {
+            showError("Please enter a valid price");
+            return false;
+        }
+        if (inputType.getText().toString().isEmpty()) {
+            showError("Please enter a type of yoga class");
+            return false;
+        }
+        if (inputTeacher.getText().toString().isEmpty()) {
+            showError("Please enter the teacher's name");
+            return false;
+        }
+        return true;
+    }
+
+    // Display an error message to the user
+    private void showError(String message) {
+        Toast.makeText(Update.this, message, Toast.LENGTH_SHORT).show();
     }
 }

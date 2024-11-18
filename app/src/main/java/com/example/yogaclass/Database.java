@@ -71,11 +71,11 @@ public class Database extends SQLiteOpenHelper {
         long result = db.insert(table_classes, null, values);
         if (result == -1) {
             db.close();
-            Toast.makeText(context , "Added fail!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context , "Added Fail!", Toast.LENGTH_SHORT).show();
         }
         else {
             db.close();
-            Toast.makeText(context , "Added ok!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context , "Added Successfully!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -94,11 +94,11 @@ public class Database extends SQLiteOpenHelper {
         int classId = db.update(table_classes, values, " class_id = ?", new String[]{String.valueOf(class_id)});
         if (classId == -1) {
             db.close();
-            Toast.makeText(context , "Updated Fail!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context , "Updated Fail", Toast.LENGTH_SHORT).show();
         }
         else {
             db.close();
-            Toast.makeText(context , "Updated Successfully!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context , "Updated Successfully", Toast.LENGTH_SHORT).show();
         }
     }
 
