@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -8,19 +7,15 @@
     android:padding="16dp"
     tools:context=".Update">
 
-    <!-- ScrollView for scrolling content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="14dp">
-
-            <!-- Title TextView -->
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
@@ -31,22 +26,18 @@
                 android:textStyle="bold"
                 android:textColor="@color/blue"
                 android:layout_marginBottom="20dp" />
-
-            <!-- Day Selection -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_marginBottom="12dp">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Day of the week"
                     android:textSize="16sp"
                     android:layout_marginEnd="10dp" />
-
                 <Spinner
                     android:id="@+id/inputDay"
                     android:layout_width="0dp"
@@ -55,22 +46,18 @@
                     android:padding="8dp"
                     android:backgroundTint="@color/blue" />
             </LinearLayout>
-
-            <!-- Time Selection -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_marginBottom="12dp">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Time of course"
                     android:textSize="16sp"
                     android:layout_marginEnd="10dp" />
-
                 <TextView
                     android:id="@+id/inputTime"
                     android:layout_width="0dp"
@@ -81,7 +68,6 @@
                     android:textStyle="bold"
                     android:background="@drawable/rounded_background"
                     android:layout_marginEnd="10dp" />
-
                 <TextView
                     android:id="@+id/timeBtn"
                     android:layout_width="wrap_content"
@@ -89,90 +75,74 @@
                     android:drawableStart="@drawable/pick_time"
                     android:padding="8dp" />
             </LinearLayout>
-
-            <!-- Input Fields (Capacity, Duration, Price, Type, Description, Teacher) -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:hint="Capacity">
-
                 <EditText
                     android:id="@+id/inputCapacity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:hint="Duration">
-
                 <EditText
                     android:id="@+id/inputDuration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:hint="Price per class">
-
                 <EditText
                     android:id="@+id/inputPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:hint="Type of class (Flow Yoga, Aerial Yoga...)">
-
                 <EditText
                     android:id="@+id/inputType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:hint="Description (Optional)">
-
                 <EditText
                     android:id="@+id/inputDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:hint="Teacher of class">
-
                 <EditText
                     android:id="@+id/inputTeacher"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Update and Delete Buttons -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginTop="20dp">
-
                 <Button
                     android:id="@+id/updateBtn"
                     android:layout_width="wrap_content"
@@ -183,7 +153,6 @@
                     android:layout_marginEnd="20dp"
                     android:backgroundTint="@color/blue"
                     android:textColor="@android:color/white" />
-
                 <Button
                     android:id="@+id/deleteBtn"
                     android:layout_width="wrap_content"

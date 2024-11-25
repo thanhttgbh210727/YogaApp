@@ -26,10 +26,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Adapter adapter;
     Database db;
-
     ArrayList<String> classId, dayOfWeek, time, capacity, duration, price, type, description, teacher;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,17 +52,14 @@ public class MainActivity extends AppCompatActivity {
         type = new ArrayList<>();
         description = new ArrayList<>();
         teacher = new ArrayList<>();
-
         adapter = new Adapter(MainActivity.this, this, classId, dayOfWeek, time, capacity, duration, price, type, description, teacher);
         db = new Database(MainActivity.this);
 
         //set up adapter
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-
         //show class
         showClass();
-
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,9 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
-
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -104,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
             recreate();
         }
     }
-
     @Override
     protected void onPostResume() {
         super.onPostResume();
@@ -121,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
         showClass();
         adapter.notifyDataSetChanged();
     }
-
     private void showSearchResult(String input) {
         Cursor cursor = db.searchClassByName(input);
         if (cursor.getCount() == 0) {
