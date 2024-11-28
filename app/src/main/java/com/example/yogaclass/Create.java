@@ -59,7 +59,7 @@ public class Create extends AppCompatActivity {
         // Set up time picker for the time button
         timeBtn.setOnClickListener(x -> showTimePicker(inputTime));
 
-        // Handle add button click
+
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,7 +82,7 @@ public class Create extends AppCompatActivity {
         });
     }
 
-    // Display a dropdown list for days of the week
+
     private void showDropdownList(Spinner spinner) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.dayofweek, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -91,17 +91,15 @@ public class Create extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                adapterView.getItemAtPosition(i); // Optional
+                adapterView.getItemAtPosition(i);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                // Do nothing
             }
         });
     }
 
-    // Show a time picker dialog to select the time
     private void showTimePicker(TextView inputTime) {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -115,7 +113,7 @@ public class Create extends AppCompatActivity {
         timePickerDialog.show();
     }
 
-    // Validate user input
+    // Validate input
     private boolean isInputValid() {
         if (!isPickedTime) {
             showError("Please pick a time for the class");
@@ -144,7 +142,6 @@ public class Create extends AppCompatActivity {
         return true;
     }
 
-    // Display error message
     private void showError(String message) {
         Toast.makeText(Create.this, message, Toast.LENGTH_SHORT).show();
     }

@@ -57,7 +57,6 @@ public class Update extends AppCompatActivity {
 
         setClassDetail();
 
-        // Update button click listener
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,7 +92,6 @@ public class Update extends AppCompatActivity {
         showDropdownList(dayOfWeek);
     }
 
-    // Display a dropdown list for days of the week
     private void showDropdownList(Spinner spinner) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.dayofweek, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -111,7 +109,6 @@ public class Update extends AppCompatActivity {
         });
     }
 
-    // Show a time picker dialog to select the time
     private void showTimePicker(TextView inputTime) {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -149,7 +146,6 @@ public class Update extends AppCompatActivity {
         }
     }
 
-    // Set day of the week in the spinner
     private void setDayOfWeek(Spinner spinner, String value) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.dayofweek, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -160,7 +156,7 @@ public class Update extends AppCompatActivity {
             spinner.setSelection(index);
     }
 
-    // Validate user input
+    // Validate input
     private boolean isInputValid() {
         if (inputTime.getText().toString().isEmpty()) {
             showError("Please pick a time for the class");
@@ -189,7 +185,6 @@ public class Update extends AppCompatActivity {
         return true;
     }
 
-    // Display an error message to the user
     private void showError(String message) {
         Toast.makeText(Update.this, message, Toast.LENGTH_SHORT).show();
     }
