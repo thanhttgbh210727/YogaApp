@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:background="#F5F5F5">
-
-    <!-- Title TextView -->
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -19,8 +16,6 @@
         android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="@color/blue" />
-
-    <!-- Search Bar LinearLayout -->
     <LinearLayout
         android:id="@+id/searchBar"
         android:layout_width="match_parent"
@@ -32,8 +27,6 @@
         android:layout_marginHorizontal="20dp"
         android:padding="5dp"
         android:background="@drawable/rounded_background">
-
-        <!-- Search Input EditText -->
         <EditText
             android:id="@+id/searchInput"
             android:layout_width="0dp"
@@ -45,8 +38,6 @@
             android:padding="8dp"
             android:backgroundTint="@color/grey"
             android:textColor="@color/black" />
-
-        <!-- Search Button TextView -->
         <TextView
             android:id="@+id/searchBtn"
             android:layout_width="wrap_content"
@@ -55,8 +46,6 @@
             android:padding="10dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Search" />
-
-        <!-- Add Button TextView -->
         <TextView
             android:id="@+id/addBtn"
             android:layout_width="wrap_content"
@@ -66,8 +55,6 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Add New" />
     </LinearLayout>
-
-    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyleView"
         android:layout_width="match_parent"
@@ -77,5 +64,5 @@
         android:layout_alignParentBottom="true"
         android:clipToPadding="false"
         android:padding="8dp"
-        android:background="@drawable/rounded_background" />
+        android:background="@drawable/rounded_background"/>
 </RelativeLayout>

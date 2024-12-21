@@ -2,11 +2,14 @@ package com.example.yogaclass;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,36 +20,27 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.Calendar;
 
 public class Create extends AppCompatActivity {
-    private Spinner dayOfWeekSpinner;
-    private TextView inputTime, timeBtn;
-    private EditText inputCapacity, inputDuration, inputPrice, inputType, inputDescription, inputTeacher;
-    private Button addBtn;
-    private Database db;
-    private boolean isTimePicked;
+    Spinner dayOfWeek;
+    TextView inputTime, timeBtn;
+    EditText inputCapacity, inputDuration, inputPrice, inputType, inputDescription, inputTeacher;
+    Button addBtn;
+    Database db;
+    boolean isPickedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_class);
-
-        setupInsets();
-        initializeFields();
-        setupDropdown(dayOfWeekSpinner);
-        setupListeners();
-    }
-
-    private void setupInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-    }
 
-    private void initializeFields() {
-        db = new Database(this);
-        dayOfWeekSpinner = findViewById(R.id.inputDay);
+        db = new Database(Create.this);
+
+        dayOfWeek = findViewById(R.id.inputDay);
         inputTime = findViewById(R.id.inputTime);
         timeBtn = findViewById(R.id.timeBtn);
         inputCapacity = findViewById(R.id.inputCapacity);
@@ -56,41 +50,63 @@ public class Create extends AppCompatActivity {
         inputDescription = findViewById(R.id.inputDescription);
         addBtn = findViewById(R.id.addBtn);
         inputTeacher = findViewById(R.id.inputTeacher);
-        isTimePicked = false;
+
+        isPickedTime = false;
+        showDropdownList(dayOfWeek);
+
+        timeBtn.setOnClickListener(x -> showTimePicker(inputTime));
+
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String _dayOfWeek = dayOfWeek.getSelectedItem().toString();
+                String _time = inputTime.getText().toString();
+                int _capacity = Integer.parseInt(inputCapacity.getText().toString());
+                int _duration = Integer.parseInt(inputDuration.getText().toString());
+                double _price = Double.parseDouble(inputPrice.getText().toString());
+                String _type = inputType.getText().toString();
+                String _description = inputDescription.getText().toString();
+                String _teacher = inputTeacher.getText().toString();
+
+                db.addClass(Create.this, _dayOfWeek, _time, _capacity, _duration, _price, _type, _description, _teacher);
+                finish();
+            }
+        });
+
     }
 
-    private void setupDropdown(Spinner spinner) {
+    private void showDropdownList(Spinner spinner) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.dayofweek, android.R.layout.simple_spinner_item);
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         spinner.setAdapter(adapter);
-    }
 
-    private void setupListeners() {
-        timeBtn.setOnClickListener(view -> showTimePicker());
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                adapterView.getItemAtPosition(i);
+            }
 
-        addBtn.setOnClickListener(view -> {
-            String selectedDayOfWeek = dayOfWeekSpinner.getSelectedItem().toString();
-            String selectedTime = inputTime.getText().toString();
-            int capacity = Integer.parseInt(inputCapacity.getText().toString());
-            int duration = Integer.parseInt(inputDuration.getText().toString());
-            double price = Double.parseDouble(inputPrice.getText().toString());
-            String type = inputType.getText().toString();
-            String description = inputDescription.getText().toString();
-            String teacher = inputTeacher.getText().toString();
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
-            db.addClass(this, selectedDayOfWeek, selectedTime, capacity, duration, price, type, description, teacher);
-            finish();
+            }
         });
     }
 
-    private void showTimePicker() {
+    private void showTimePicker(TextView inputTime) {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        new TimePickerDialog(this, (view, selectedHour, selectedMinute) -> {
-            inputTime.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
-            isTimePicked = true;
-        }, hour, minute, true).show();
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, (TimePicker view, int selectedHour, int selectedMinute) -> {
+            String time = String.format("%02d:%02d", selectedHour, selectedMinute);
+            inputTime.setText(time);
+            isPickedTime = true;
+        }, hour, minute, true);
+        timePickerDialog.show();
     }
 }
